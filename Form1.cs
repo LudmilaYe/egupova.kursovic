@@ -32,6 +32,25 @@ namespace egupova.kursovic
             }
 
         }
+        // добавил функцию обновления состояния системы
+        private void UpdateState()
+        {
+            foreach (var particle in particles)
+            {
+                var directionInRadians = particle.Direction / 180 * Math.PI;
+                particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
+                particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
+            }
+        }
+        // функция рендеринга
+        private void Render(Graphics g)
+        {
+            // утащили сюда отрисовку частиц
+            foreach (var particle in particles)
+            {
+                particle.Draw(g);
+            }
+        }
 
         private void picDicplay_Click(object sender, EventArgs e)
         {
@@ -40,17 +59,13 @@ namespace egupova.kursovic
        
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
+
+            UpdateState(); // каждый тик обновляем систему
+
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
                 g.Clear(Color.White); // добавил очистку
-                // рисую на изображении сколько насчитал
-                foreach (var particle in particles)
-                {
-                    particle.Draw(g);
-                }
-
-
+                Render(g); // рендерим систему
             }
             // обновить picDisplay
             picDisplay.Invalidate();

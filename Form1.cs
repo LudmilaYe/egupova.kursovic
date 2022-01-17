@@ -82,7 +82,7 @@ namespace egupova.kursovic
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.White); // добавил очистку
+                g.Clear(Color.Beige); // добавил очистку
                 Render(g); // рендерим систему
             }
             // обновить picDisplay

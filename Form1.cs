@@ -37,10 +37,23 @@ namespace egupova.kursovic
         {
 
         }
-
+       
         private void timer1_Tick(object sender, EventArgs e)
         {
+            
+            using (var g = Graphics.FromImage(picDisplay.Image))
+            {
+                g.Clear(Color.White); // добавил очистку
+                // рисую на изображении сколько насчитал
+                foreach (var particle in particles)
+                {
+                    particle.Draw(g);
+                }
 
+
+            }
+            // обновить picDisplay
+            picDisplay.Invalidate();
         }
     }
 }

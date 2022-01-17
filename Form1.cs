@@ -25,7 +25,7 @@ namespace egupova.kursovic
             {
                 var particle = new Particle();
                 // переношу частицы в центр изображения
-                particle.X = picDisplay.Image.Width / 3;
+                particle.X = picDisplay.Image.Width / 2;
                 particle.Y = picDisplay.Image.Height / 2;
                 // добавляю список
                 particles.Add(particle);
@@ -34,6 +34,11 @@ namespace egupova.kursovic
         }
 
         private void picDicplay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
         {
 
         }

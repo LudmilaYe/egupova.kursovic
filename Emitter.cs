@@ -14,7 +14,7 @@ namespace egupova.kursovic
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
-        public float GravitationY = 1; // пусть гравитация будет силой один пиксель за такт, нам хватит
+        public float GravitationY = 0; // отключила // пусть гравитация будет силой один пиксель за такт, нам хватит
 
         public void UpdateState()
         {
@@ -53,23 +53,30 @@ namespace egupova.kursovic
 
                     // сделаем сначала для одной точки
                     // и так считаем вектор притяжения к точке
-                    float gX = gravityPoints[0].X - particle.X;
-                    float gY = gravityPoints[0].Y - particle.Y;
 
-                    // считаем квадрат расстояния между частицей и точкой r^2
-                    float r2 = gX * gX + gY * gY;
-                    float M = 100; // сила притяжения к точке, пусть 100 будет
+                    // каждая точка по-своему воздействует на вектор скорости
+                    foreach (var point in gravityPoints)
+                    {
+                        float gX = point.X - particle.X;
+                        float gY = point.Y - particle.Y;
 
-                    // пересчитываем вектор скорости с учетом притяжения к точке
-                    particle.SpeedX += (gX) * M / r2;
-                    particle.SpeedY += (gY) * M / r2;
+                        // считаем квадрат расстояния между частицей и точкой r^2
+                        //float r2 = gX * gX + gY * gY;
+                        float r2 = (float)Math.Max(100, gX * gX + gY * gY); // ограничил
+                        float M = 100; // сила притяжения к точке, пусть 100 будет
 
-                    particle.X += particle.SpeedX;
-                    particle.Y += particle.SpeedY;
-                    // гравитация воздействует на вектор скорости, поэтому пересчитываем его
-                    particle.SpeedX += GravitationX;
-                    particle.SpeedY += GravitationY;
+                        // пересчитываем вектор скорости с учетом притяжения к точке
+                        particle.SpeedX += (gX) * M / r2;
+                        particle.SpeedY += (gY) * M / r2;
+
+                        particle.X += particle.SpeedX;
+                        particle.Y += particle.SpeedY;
+                        // гравитация воздействует на вектор скорости, поэтому пересчитываем его
+                        particle.SpeedX += GravitationX;
+                        particle.SpeedY += GravitationY;
+                    }
                 }
+
             }
             // добавил генерацию частиц
             // генерирую не более 10 штук за тик

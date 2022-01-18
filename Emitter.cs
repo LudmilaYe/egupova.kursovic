@@ -10,6 +10,7 @@ namespace egupova.kursovic
     class Emitter
     {
         List<Particle> particles = new List<Particle>();
+        public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
@@ -49,6 +50,20 @@ namespace egupova.kursovic
                     */
                     // и добавляем новый, собственно он даже проще становится, 
                     // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
+
+                    // сделаем сначала для одной точки
+                    // и так считаем вектор притяжения к точке
+                    float gX = gravityPoints[0].X - particle.X;
+                    float gY = gravityPoints[0].Y - particle.Y;
+
+                    // считаем квадрат расстояния между частицей и точкой r^2
+                    float r2 = gX * gX + gY * gY;
+                    float M = 100; // сила притяжения к точке, пусть 100 будет
+
+                    // пересчитываем вектор скорости с учетом притяжения к точке
+                    particle.SpeedX += (gX) * M / r2;
+                    particle.SpeedY += (gY) * M / r2;
+
                     particle.X += particle.SpeedX;
                     particle.Y += particle.SpeedY;
                     // гравитация воздействует на вектор скорости, поэтому пересчитываем его
@@ -84,6 +99,17 @@ namespace egupova.kursovic
             foreach (var particle in particles)
             {
                 particle.Draw(g);
+            }
+            // рисую точки притяжения красными кружочками
+            foreach (var point in gravityPoints)
+            {
+                g.FillEllipse(
+                    new SolidBrush(Color.Orange),
+                    point.X - 5,
+                    point.Y - 5,
+                    10,
+                    10
+                );
             }
         }
     }

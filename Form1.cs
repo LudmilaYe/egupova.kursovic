@@ -12,15 +12,14 @@ namespace egupova.kursovic
 {
     public partial class Form1 : Form
     {
-        
-       
         Emitter emitter = new Emitter(); // добавили эмиттер
         public Form1()
         {
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
-
+            // добавил точечку
+            emitter.gravityPoints.Add(new Point(picDisplay.Width / 2, picDisplay.Height / 2 ));
         }
 
 

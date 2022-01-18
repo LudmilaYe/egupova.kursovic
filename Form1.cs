@@ -32,6 +32,8 @@ namespace egupova.kursovic
             }
 
         }
+        
+
         // добавил функцию обновления состояния системы
         private void UpdateState()
         {
@@ -43,13 +45,14 @@ namespace egupova.kursovic
                 {
                     // восстанавливаю здоровье
                     particle.Life = 20 + Particle.rand.Next(100);
+                    // новое начальное расположение частицы — это то, куда указывает курсор
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
                     // делаю рандомное направление, скорость и размер
                     particle.Direction = Particle.rand.Next(360);
                     particle.Speed = 1 + Particle.rand.Next(10);
                     particle.Radius = 2 + Particle.rand.Next(10);
-                    // перемещаю частицу в центр
-                    particle.X = picDisplay.Image.Width / 2;
-                    particle.Y = picDisplay.Image.Height / 2;
+
                 }
                 else
                 {
@@ -59,6 +62,15 @@ namespace egupova.kursovic
                     particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
                 }
             }
+        }
+        // добавляем переменные для хранения положения мыши
+        private int MousePositionX = 0;
+        private int MousePositionY = 0;
+        private void picDisplay_MouseMove(object sender, MouseEventArgs e)
+        {
+            // в обработчике заносим положение мыши в переменные для хранения положения мыши
+            MousePositionX = e.X;
+            MousePositionY = e.Y;
         }
         // функция рендеринга
         private void Render(Graphics g)
@@ -70,10 +82,7 @@ namespace egupova.kursovic
             }
         }
 
-        private void picDicplay_Click(object sender, EventArgs e)
-        {
-
-        }
+       
        
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -88,5 +97,11 @@ namespace egupova.kursovic
             // обновить picDisplay
             picDisplay.Invalidate();
         }
+
+     
+
+        
+
+       
     }
 }

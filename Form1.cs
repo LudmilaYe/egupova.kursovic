@@ -23,7 +23,7 @@ namespace egupova.kursovic
             
 
         }
-        
+
 
         // добавил функцию обновления состояния системы
         private void UpdateState()
@@ -44,7 +44,7 @@ namespace egupova.kursovic
                     particle.Speed = 1 + Particle.rand.Next(10);
                     */
                     particle.Radius = 2 + Particle.rand.Next(10);
-                    
+
                     /* ЭТО ДОБАВЛЯЮ, тут сброс состояния частицы */
                     var direction = (double)Particle.rand.Next(360);
                     var speed = 1 + Particle.rand.Next(10);
@@ -65,11 +65,11 @@ namespace egupova.kursovic
                 }
             }
             // добавил генерацию частиц
-        // генерирую не более 10 штук за тик
-        for (var i = 0; i < 10; ++i)
-        {
-            if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+            // генерирую не более 10 штук за тик
+            for (var i = 0; i < 10; ++i)
             {
+                if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+                {
                     // а у тут уже наш новый класс используем
                     var particle = new Particle.ParticleColorful();
                     // ну и цвета меняем
@@ -79,12 +79,13 @@ namespace egupova.kursovic
                     particle.Y = MousePositionY;
                     particles.Add(particle);
                 }
-            else
-            {
-                break; // а если частиц уже 500 штук, то ничего не генерирую
+                else
+                {
+                    break; // а если частиц уже 500 штук, то ничего не генерирую
+                }
             }
         }
-        }
+        
         // добавляем переменные для хранения положения мыши
         private int MousePositionX = 0;
         private int MousePositionY = 0;

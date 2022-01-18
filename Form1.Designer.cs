@@ -39,9 +39,10 @@ namespace egupova.kursovic
             // 
             this.picDisplay.Location = new System.Drawing.Point(14, 12);
             this.picDisplay.Name = "picDisplay";
-            this.picDisplay.Size = new System.Drawing.Size(774, 374);
+            this.picDisplay.Size = new System.Drawing.Size(774, 426);
             this.picDisplay.TabIndex = 0;
             this.picDisplay.TabStop = false;
+            this.picDisplay.Click += new System.EventHandler(this.picDisplay_Click);
             this.picDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picDisplay_MouseMove);
             // 
             // timer1
@@ -58,7 +59,6 @@ namespace egupova.kursovic
             this.Controls.Add(this.picDisplay);
             this.Name = "Form1";
             this.Text = "Form1";
-           
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             this.ResumeLayout(false);
 

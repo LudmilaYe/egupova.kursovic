@@ -20,16 +20,7 @@ namespace egupova.kursovic
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
 
-            // генерирую 500 частиц
-            for (var i = 0; i < 500; ++i)
-            {
-                var particle = new Particle();
-                // переношу частицы в центр изображения
-                particle.X = picDisplay.Image.Width / 2;
-                particle.Y = picDisplay.Image.Height / 2;
-                // добавляю список
-                particles.Add(particle);
-            }
+            
 
         }
         
@@ -62,6 +53,26 @@ namespace egupova.kursovic
                     particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
                 }
             }
+            // добавил генерацию частиц
+        // генерирую не более 10 штук за тик
+        for (var i = 0; i < 10; ++i)
+        {
+            if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
+            {
+                    // а у тут уже наш новый класс используем
+                    var particle = new Particle.ParticleColorful();
+                    // ну и цвета меняем
+                    particle.FromColor = Color.Brown;
+                    particle.ToColor = Color.FromArgb(0, Color.Blue);
+                    particle.X = MousePositionX;
+                    particle.Y = MousePositionY;
+                    particles.Add(particle);
+                }
+            else
+            {
+                break; // а если частиц уже 500 штук, то ничего не генерирую
+            }
+        }
         }
         // добавляем переменные для хранения положения мыши
         private int MousePositionX = 0;
@@ -98,10 +109,9 @@ namespace egupova.kursovic
             picDisplay.Invalidate();
         }
 
-     
+        private void picDisplay_Click(object sender, EventArgs e)
+        {
 
-        
-
-       
+        }
     }
 }

@@ -39,18 +39,29 @@ namespace egupova.kursovic
                     // новое начальное расположение частицы — это то, куда указывает курсор
                     particle.X = MousePositionX;
                     particle.Y = MousePositionY;
-                    // делаю рандомное направление, скорость и размер
+                    /* делаю рандомное направление, скорость и размер
                     particle.Direction = Particle.rand.Next(360);
                     particle.Speed = 1 + Particle.rand.Next(10);
+                    */
                     particle.Radius = 2 + Particle.rand.Next(10);
-
+                    
+                    /* ЭТО ДОБАВЛЯЮ, тут сброс состояния частицы */
+                    var direction = (double)Particle.rand.Next(360);
+                    var speed = 1 + Particle.rand.Next(10);
+                    particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+                    particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
                 }
                 else
                 {
-                    // а это наш старый код
+                    /* а это наш старый код
                     var directionInRadians = particle.Direction / 180 * Math.PI;
                     particle.X += (float)(particle.Speed * Math.Cos(directionInRadians));
                     particle.Y -= (float)(particle.Speed * Math.Sin(directionInRadians));
+                    */
+                    // и добавляем новый, собственно он даже проще становится, 
+                    // так как теперь мы храним вектор скорости в явном виде и его не надо пересчитывать
+                    particle.X += particle.SpeedX;
+                    particle.Y += particle.SpeedY;
                 }
             }
             // добавил генерацию частиц

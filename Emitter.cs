@@ -99,28 +99,27 @@ namespace egupova.kursovic
                 }
             }
         }
-
-        public abstract class IImpactPoint
+        public void Render(Graphics g)
         {
-            public float X; // ну точка же, вот и две координаты
-            public float Y;
+            // это не трогаем
+            foreach (var particle in particles)
+            {
+                particle.Draw(g);
+            }
 
-            // абстрактный метод с помощью которого будем изменять состояние частиц
-            // например притягивать
-            public abstract void ImpactParticle(Particle particle);
-
-            // базовый класс для отрисовки точечки
-            public void Render(Graphics g)
+            // рисую точки притяжения красными кружочками
+            foreach (var point in gravityPoints)
             {
                 g.FillEllipse(
-                        new SolidBrush(Color.Red),
-                        X - 5,
-                        Y - 5,
-                        10,
-                        10
-                    );
+                    new SolidBrush(Color.Red),
+                    point.X - 5,
+                    point.Y - 5,
+                    10,
+                    10
+                );
             }
         }
+
 
     }
 

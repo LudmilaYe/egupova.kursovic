@@ -11,7 +11,6 @@ namespace egupova.kursovic
     {
         List<Particle> particles = new List<Particle>();
         public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        //public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
@@ -44,8 +43,6 @@ namespace egupova.kursovic
                 }
                 else
                 {
-                   
-
                     foreach (var point in impactPoints)
                     {
                        

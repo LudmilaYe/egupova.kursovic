@@ -19,9 +19,7 @@ namespace egupova.kursovic
         public float Life;//запас здоровья частицы 
         // добавили генератор случайных чисел
         public static Random rand = new Random();
-
-        
-
+        internal Color FromColor;
         // конструктор по умолчанию будет создавать кастомную частицу
         public Particle()
         {

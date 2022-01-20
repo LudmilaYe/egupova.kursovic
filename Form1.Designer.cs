@@ -81,9 +81,9 @@ namespace egupova.kursovic
             // Red
             // 
             this.Red.BackColor = System.Drawing.Color.Red;
-            this.Red.Location = new System.Drawing.Point(700, 97);
+            this.Red.Location = new System.Drawing.Point(716, 107);
             this.Red.Name = "Red";
-            this.Red.Size = new System.Drawing.Size(183, 31);
+            this.Red.Size = new System.Drawing.Size(183, 71);
             this.Red.TabIndex = 3;
             this.Red.Text = "Красный ";
             this.Red.UseVisualStyleBackColor = false;
@@ -92,9 +92,9 @@ namespace egupova.kursovic
             // Blue
             // 
             this.Blue.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.Blue.Location = new System.Drawing.Point(700, 146);
+            this.Blue.Location = new System.Drawing.Point(716, 206);
             this.Blue.Name = "Blue";
-            this.Blue.Size = new System.Drawing.Size(183, 31);
+            this.Blue.Size = new System.Drawing.Size(183, 69);
             this.Blue.TabIndex = 4;
             this.Blue.Text = "Голубой";
             this.Blue.UseVisualStyleBackColor = false;
@@ -102,11 +102,13 @@ namespace egupova.kursovic
             // 
             // Orange
             // 
+            this.Orange.AllowDrop = true;
             this.Orange.BackColor = System.Drawing.Color.GreenYellow;
+            this.Orange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Orange.DialogResult = System.Windows.Forms.DialogResult.Abort;
-            this.Orange.Location = new System.Drawing.Point(700, 194);
+            this.Orange.Location = new System.Drawing.Point(716, 317);
             this.Orange.Name = "Orange";
-            this.Orange.Size = new System.Drawing.Size(183, 31);
+            this.Orange.Size = new System.Drawing.Size(183, 64);
             this.Orange.TabIndex = 5;
             this.Orange.Text = "Зеленый ";
             this.Orange.UseVisualStyleBackColor = false;

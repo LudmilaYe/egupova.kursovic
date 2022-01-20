@@ -20,7 +20,7 @@ namespace egupova.kursovic
         // добавили генератор случайных чисел
         public static Random rand = new Random();
 
-        public Color FromColor { get; internal set; }
+        
 
         // конструктор по умолчанию будет создавать кастомную частицу
         public Particle()

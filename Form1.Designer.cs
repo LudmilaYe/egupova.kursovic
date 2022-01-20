@@ -81,9 +81,9 @@ namespace egupova.kursovic
             // Red
             // 
             this.Red.BackColor = System.Drawing.Color.Red;
-            this.Red.Location = new System.Drawing.Point(678, 97);
+            this.Red.Location = new System.Drawing.Point(700, 97);
             this.Red.Name = "Red";
-            this.Red.Size = new System.Drawing.Size(75, 31);
+            this.Red.Size = new System.Drawing.Size(183, 31);
             this.Red.TabIndex = 3;
             this.Red.Text = "Красный ";
             this.Red.UseVisualStyleBackColor = false;
@@ -92,22 +92,25 @@ namespace egupova.kursovic
             // Blue
             // 
             this.Blue.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.Blue.Location = new System.Drawing.Point(759, 97);
+            this.Blue.Location = new System.Drawing.Point(700, 146);
             this.Blue.Name = "Blue";
-            this.Blue.Size = new System.Drawing.Size(75, 31);
+            this.Blue.Size = new System.Drawing.Size(183, 31);
             this.Blue.TabIndex = 4;
             this.Blue.Text = "Голубой";
             this.Blue.UseVisualStyleBackColor = false;
+            this.Blue.Click += new System.EventHandler(this.Blue_Click);
             // 
             // Orange
             // 
-            this.Orange.BackColor = System.Drawing.Color.OrangeRed;
-            this.Orange.Location = new System.Drawing.Point(840, 97);
+            this.Orange.BackColor = System.Drawing.Color.GreenYellow;
+            this.Orange.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.Orange.Location = new System.Drawing.Point(700, 194);
             this.Orange.Name = "Orange";
-            this.Orange.Size = new System.Drawing.Size(96, 31);
+            this.Orange.Size = new System.Drawing.Size(183, 31);
             this.Orange.TabIndex = 5;
-            this.Orange.Text = "Оранжевый";
+            this.Orange.Text = "Зеленый ";
             this.Orange.UseVisualStyleBackColor = false;
+            this.Orange.Click += new System.EventHandler(this.Orange_Click);
             // 
             // Form1
             // 

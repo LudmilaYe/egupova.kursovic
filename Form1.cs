@@ -100,5 +100,15 @@ namespace egupova.kursovic
         {
             emitter.FromColor = Color.Red;
         }
+
+        private void Blue_Click(object sender, EventArgs e)
+        {
+            emitter.FromColor = Color.Blue;
+        }
+
+        private void Orange_Click(object sender, EventArgs e)
+        {
+            emitter.FromColor = Color.Green;
+        }
     }
 }

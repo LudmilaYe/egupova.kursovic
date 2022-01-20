@@ -15,6 +15,7 @@ namespace egupova.kursovic
         Emitter emitter = new Emitter(); // добавили эмиттер
         public Form1()
         {
+            
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
@@ -28,12 +29,45 @@ namespace egupova.kursovic
             emitter.gravityPoints.Add(new Point(
                (int)(picDisplay.Width * 0.25), picDisplay.Height / 2
            ));
+            ///
+            /*
+            InitializeComponent();
+            picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
+            // а тут теперь вручную создаем
+            emitter = new Emitter.TopEmitter
+            {
+                Width = picDisplay.Width,
+                GravitationY = 0.25f
+            };
+            /*
+            // гравитон
+            emitter.impactPoints.Add(new GravityPoint
+            {
+                X = (float)(picDisplay.Width * 0.25),
+                Y = picDisplay.Height / 2
+            });
+
+            // в центре антигравитон
+            emitter.impactPoints.Add(new AntiGravityPoint
+            {
+                X = picDisplay.Width / 2,
+                Y = picDisplay.Height / 2
+            });
+            
+
+            // снова гравитон
+            emitter.impactPoints.Add(new GravityPoint
+            {
+                X = (float)(picDisplay.Width * 0.75),
+                Y = picDisplay.Height / 2
+            });
+            */
         }
 
 
         private void picDisplay_MouseMove(object sender, MouseEventArgs e)
         {
-            // а тут в эмиттер передаем положение мыфки
+            // а тут в эмиттер передаем положение мышьки
             emitter.MousePositionX = e.X;
             emitter.MousePositionY = e.Y;
         }

@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace egupova.kursovic
-{
+{ 
+
     public abstract class IImpactPoint
     {
         public float X; // ну точка же, вот и две координаты
@@ -20,7 +21,7 @@ namespace egupova.kursovic
         public void Render(Graphics g)
         {
             g.FillEllipse(
-                    new SolidBrush(Color.Red),
+                    new SolidBrush(Color.Blue),
                     X - 5,
                     Y - 5,
                     10,
@@ -28,34 +29,36 @@ namespace egupova.kursovic
                 );
         }
     }
-    public class GravityPoint : IImpactPoint
-    {
-        public int Power = 100; // сила притяжения
 
-        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
-        public override void ImpactParticle(Particle particle)
+        public class GravityPoint : IImpactPoint
         {
-            float gX = X - particle.X;
-            float gY = Y - particle.Y;
-            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+            public int Power = 100; // сила притяжения
 
-            particle.SpeedX += gX * Power / r2;
-            particle.SpeedY += gY * Power / r2;
+            // а сюда по сути скопировали с минимальными правками то что было в UpdateState
+            public override void ImpactParticle(Particle particle)
+            {
+                float gX = X - particle.X;
+                float gY = Y - particle.Y;
+                float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+
+                particle.SpeedX += gX * Power / r2;
+                particle.SpeedY += gY * Power / r2;
+            }
         }
-    }
-    public class AntiGravityPoint : IImpactPoint
-    {
-        public int Power = 100; // сила отторжения
-
-        // а сюда по сути скопировали с минимальными правками то что было в UpdateState
-        public override void ImpactParticle(Particle particle)
+        public class AntiGravityPoint : IImpactPoint
         {
-            float gX = X - particle.X;
-            float gY = Y - particle.Y;
-            float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+            public int Power = 100; // сила отторжения
 
-            particle.SpeedX -= gX * Power / r2; // тут минусики вместо плюсов
-            particle.SpeedY -= gY * Power / r2; // и тут
+            // а сюда по сути скопировали с минимальными правками то что было в UpdateState
+            public override void ImpactParticle(Particle particle)
+            {
+                float gX = X - particle.X;
+                float gY = Y - particle.Y;
+                float r2 = (float)Math.Max(100, gX * gX + gY * gY);
+
+                particle.SpeedX -= gX * Power / r2; // тут минусики вместо плюсов
+                particle.SpeedY -= gY * Power / r2; // и тут
+            }
         }
-    }
+    
 }

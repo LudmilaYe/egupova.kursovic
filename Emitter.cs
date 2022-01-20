@@ -10,12 +10,13 @@ namespace egupova.kursovic
     class Emitter
     {
         List<Particle> particles = new List<Particle>();
-        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        //public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
+        //public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
+        public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
         public float GravitationY = 0; // отключила // пусть гравитация будет силой один пиксель за такт, нам хватит
+        
 
         public void UpdateState()
         {
@@ -24,23 +25,26 @@ namespace egupova.kursovic
                 particle.Life -= 1; // уменьшаю здоровье
                                     // если здоровье кончилось
                 if (particle.Life < 0)
-                {
+                { 
+                    
                     // восстанавливаю здоровье
                     particle.Life = 20 + Particle.rand.Next(100);
                     // новое начальное расположение частицы — это то, куда указывает курсор
                     particle.X = MousePositionX;
                     particle.Y = MousePositionY;
-                    /* делаю рандомное направление, скорость и размер
+                    // делаю рандомное направление, скорость и размер
                     particle.Direction = Particle.rand.Next(360);
                     particle.Speed = 1 + Particle.rand.Next(10);
-                    */
+                    
                     particle.Radius = 2 + Particle.rand.Next(10);
 
-                    /* ЭТО ДОБАВЛЯЮ, тут сброс состояния частицы */
+                    // ЭТО ДОБАВЛЯЮ, тут сброс состояния частицы //
                     var direction = (double)Particle.rand.Next(360);
                     var speed = 1 + Particle.rand.Next(10);
                     particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
                     particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+                    
+                    //ResetParticle(particle); // заменили этот блок на вызов сброса частицы 
                 }
                 else
                 {
@@ -56,9 +60,9 @@ namespace egupova.kursovic
                     // и так считаем вектор притяжения к точке
 
                     // каждая точка по-своему воздействует на вектор скорости
-                    foreach (var point in impactPoints)
+                    foreach (var point in gravityPoints)
                     {
-                        /*
+                        
                         float gX = point.X - particle.X;
                         float gY = point.Y - particle.Y;
 
@@ -76,8 +80,8 @@ namespace egupova.kursovic
                         // гравитация воздействует на вектор скорости, поэтому пересчитываем его
                         particle.SpeedX += GravitationX;
                         particle.SpeedY += GravitationY;
-                        */
-                        point.ImpactParticle(particle);
+                        
+                        //point.ImpactParticle(particle);
 
                     }
                 }
@@ -94,8 +98,9 @@ namespace egupova.kursovic
                     // ну и цвета меняем
                     particle.FromColor = Color.Brown;
                     particle.ToColor = Color.FromArgb(0, Color.Blue);
-                    particle.X = MousePositionX;
-                    particle.Y = MousePositionY;
+                    //particle.X = MousePositionX;
+                    //particle.Y = MousePositionY;
+                    ResetParticle(particle); // заменили этот блок на вызов сброса частицы 
                     particles.Add(particle);
                 }
                 else
@@ -113,21 +118,53 @@ namespace egupova.kursovic
             }
 
             // рисую точки притяжения красными кружочками
-            foreach (var point in impactPoints)
+            foreach (var point in gravityPoints)
             {
-                /*g.FillEllipse(
+                g.FillEllipse(
                     new SolidBrush(Color.Red),
                     point.X - 5,
                     point.Y - 5,
                     10,
                     10
                 );
-                */
-                point.Render(g); // это добавили
+                
+               // point.Render(g); // это добавили
             }
         }
+        
+        // добавил новый метод, виртуальным, чтобы переопределять можно было
+        public virtual void ResetParticle(Particle particle)
+        {
+            particle.Life = 20 + Particle.rand.Next(100);
+            particle.X = MousePositionX;
+            particle.Y = MousePositionY;
 
+            var direction = (double)Particle.rand.Next(360);
+            var speed = 1 + Particle.rand.Next(10);
 
+            particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
+            particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
+
+            particle.Radius = 2 + Particle.rand.Next(10);
+        }
+        /*
+        public class TopEmitter : Emitter
+        {
+            public int Width; // длина экрана
+
+            public override void ResetParticle(Particle particle)
+            {
+                base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
+
+                // а теперь тут уже подкручиваем параметры движения
+                particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
+                particle.Y = 0;  // ноль -- это верх экрана 
+
+                particle.SpeedY = 1; // падаем вниз по умолчанию
+                particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
+            }
+        }
+       */
     }
 
     

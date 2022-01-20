@@ -21,7 +21,7 @@ namespace egupova.kursovic
         public void Render(Graphics g)
         {
             g.FillEllipse(
-                    new SolidBrush(Color.Silver),
+                    new SolidBrush(Color.Blue),
                     X - 5,
                     Y - 5,
                     10,

@@ -53,7 +53,7 @@ namespace egupova.kursovic
 
             using (var g = Graphics.FromImage(picDisplay.Image))
             {
-                g.Clear(Color.Silver);
+                g.Clear(Color.White);
                 emitter.Render(g); // а тут теперь рендерим через эмиттер
             }
 

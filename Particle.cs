@@ -20,6 +20,8 @@ namespace egupova.kursovic
         // добавили генератор случайных чисел
         public static Random rand = new Random();
 
+        public Color FromColor { get; internal set; }
+
         // конструктор по умолчанию будет создавать кастомную частицу
         public Particle()
         {
@@ -56,8 +58,8 @@ namespace egupova.kursovic
         public class ParticleColorful : Particle
         {
             // два новых поля под цвет начальный и конечный
-            public Color FromColor;
-            public Color ToColor;
+            public Color FromColor =Color.Blue;
+            public Color ToColor=Color.FromArgb(0);
 
             // для смеси цветов
             public static Color MixColor(Color color1, Color color2, float k)

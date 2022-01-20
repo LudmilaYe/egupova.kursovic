@@ -10,23 +10,28 @@ namespace egupova.kursovic
     class Emitter
     {
         List<Particle> particles = new List<Particle>();
-        //public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
-        public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
+        public List<IImpactPoint> impactPoints = new List<IImpactPoint>();
+        //public List<Point> gravityPoints = new List<Point>(); // тут буду хранится точки притяжения
         public int MousePositionX;
         public int MousePositionY;
         public float GravitationX = 0;
         public float GravitationY = 0; // отключила // пусть гравитация будет силой один пиксель за такт, нам хватит
-        
+        public Color FromColor =Color.Blue;
+
+        public int ParticlesPerTick = 1; // добавил новое поле
 
         public void UpdateState()
         {
+            int particlesToCreate = ParticlesPerTick; // фиксируем счетчик сколько частиц нам создавать за тик
             foreach (var particle in particles)
             {
+
                 particle.Life -= 1; // уменьшаю здоровье
                                     // если здоровье кончилось
                 if (particle.Life < 0)
-                { 
-                    
+                {
+                    particle.FromColor = FromColor;
+                    /*
                     // восстанавливаю здоровье
                     particle.Life = 20 + Particle.rand.Next(100);
                     // новое начальное расположение частицы — это то, куда указывает курсор
@@ -43,8 +48,16 @@ namespace egupova.kursovic
                     var speed = 1 + Particle.rand.Next(10);
                     particle.SpeedX = (float)(Math.Cos(direction / 180 * Math.PI) * speed);
                     particle.SpeedY = -(float)(Math.Sin(direction / 180 * Math.PI) * speed);
-                    
+                    */
                     //ResetParticle(particle); // заменили этот блок на вызов сброса частицы 
+                    if (particlesToCreate > 0)
+                    {
+                        /* у нас как сброс частицы равносилен созданию частицы */
+                        particlesToCreate -= 1; // поэтому уменьшаем счётчик созданных частиц на 1
+                        ResetParticle(particle);
+                    }
+                    else
+                    { particle.Life = 0; } 
                 }
                 else
                 {
@@ -60,9 +73,10 @@ namespace egupova.kursovic
                     // и так считаем вектор притяжения к точке
 
                     // каждая точка по-своему воздействует на вектор скорости
-                    foreach (var point in gravityPoints)
+
+                    foreach (var point in impactPoints)
                     {
-                        
+                        /*
                         float gX = point.X - particle.X;
                         float gY = point.Y - particle.Y;
 
@@ -70,56 +84,50 @@ namespace egupova.kursovic
                         //float r2 = gX * gX + gY * gY;
                         float r2 = (float)Math.Max(100, gX * gX + gY * gY); // ограничил
                         float M = 100; // сила притяжения к точке, пусть 100 будет
-
+                        
                         // пересчитываем вектор скорости с учетом притяжения к точке
                         particle.SpeedX += (gX) * M / r2;
                         particle.SpeedY += (gY) * M / r2;
-
+                        */
+                        point.ImpactParticle(particle);
+                            
                         particle.X += particle.SpeedX;
                         particle.Y += particle.SpeedY;
                         // гравитация воздействует на вектор скорости, поэтому пересчитываем его
                         particle.SpeedX += GravitationX;
                         particle.SpeedY += GravitationY;
-                        
-                        //point.ImpactParticle(particle);
+                       
 
                     }
+                    
                 }
-
+                
             }
-            // добавил генерацию частиц
-            // генерирую не более 10 штук за тик
-            for (var i = 0; i < 10; ++i)
+            while (particlesToCreate >= 1)
             {
-                if (particles.Count < 500) // пока частиц меньше 500 генерируем новые
-                {
-                    // а у тут уже наш новый класс используем
-                    var particle = new Particle.ParticleColorful();
-                    // ну и цвета меняем
-                    particle.FromColor = Color.Brown;
-                    particle.ToColor = Color.FromArgb(0, Color.Blue);
-                    //particle.X = MousePositionX;
-                    //particle.Y = MousePositionY;
-                    ResetParticle(particle); // заменили этот блок на вызов сброса частицы 
-                    particles.Add(particle);
-                }
-                else
-                {
-                    break; // а если частиц уже 500 штук, то ничего не генерирую
-                }
+                particlesToCreate -= 1;
+                var particle = CreateParticle();
+                ResetParticle(particle);
+                particles.Add(particle);
             }
+
+           
         }
         public void Render(Graphics g)
         {
+
             // это не трогаем
             foreach (var particle in particles)
             {
+
+                particle.FromColor = FromColor;
                 particle.Draw(g);
             }
 
             // рисую точки притяжения красными кружочками
-            foreach (var point in gravityPoints)
+            foreach (var point in impactPoints)
             {
+                /*
                 g.FillEllipse(
                     new SolidBrush(Color.Red),
                     point.X - 5,
@@ -127,10 +135,11 @@ namespace egupova.kursovic
                     10,
                     10
                 );
-                
-               // point.Render(g); // это добавили
+                */
+                point.Render(g); // это добавили
             }
         }
+        
         
         // добавил новый метод, виртуальным, чтобы переопределять можно было
         public virtual void ResetParticle(Particle particle)
@@ -147,25 +156,14 @@ namespace egupova.kursovic
 
             particle.Radius = 2 + Particle.rand.Next(10);
         }
-        /*
-        public class TopEmitter : Emitter
+        public virtual Particle CreateParticle()
         {
-            public int Width; // длина экрана
-
-            public override void ResetParticle(Particle particle)
-            {
-                base.ResetParticle(particle); // вызываем базовый сброс частицы, там жизнь переопределяется и все такое
-
-                // а теперь тут уже подкручиваем параметры движения
-                particle.X = Particle.rand.Next(Width); // позиция X -- произвольная точка от 0 до Width
-                particle.Y = 0;  // ноль -- это верх экрана 
-
-                particle.SpeedY = 1; // падаем вниз по умолчанию
-                particle.SpeedX = Particle.rand.Next(-2, 2); // разброс влево и вправа у частиц 
-            }
+            var particle = new Particle.ParticleColorful();
+            particle.FromColor = FromColor;
+            return particle;
         }
-       */
-    }
+       
+    }  
 
     
 }

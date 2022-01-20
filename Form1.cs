@@ -15,7 +15,7 @@ namespace egupova.kursovic
         Emitter emitter = new Emitter(); // добавили эмиттер
         public Form1()
         {
-            
+            /*
             InitializeComponent();
             // привязал изображение
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
@@ -29,17 +29,17 @@ namespace egupova.kursovic
             emitter.gravityPoints.Add(new Point(
                (int)(picDisplay.Width * 0.25), picDisplay.Height / 2
            ));
-            ///
-            /*
+            */
+            
             InitializeComponent();
             picDisplay.Image = new Bitmap(picDisplay.Width, picDisplay.Height);
             // а тут теперь вручную создаем
-            emitter = new Emitter.TopEmitter
+           /*emitter = new Emitter.TopEmitter
             {
                 Width = picDisplay.Width,
                 GravitationY = 0.25f
             };
-            /*
+            */
             // гравитон
             emitter.impactPoints.Add(new GravityPoint
             {
@@ -61,7 +61,7 @@ namespace egupova.kursovic
                 X = (float)(picDisplay.Width * 0.75),
                 Y = picDisplay.Height / 2
             });
-            */
+            
         }
 
 
@@ -85,9 +85,20 @@ namespace egupova.kursovic
             picDisplay.Invalidate();
         }
 
-        private void picDisplay_Click(object sender, EventArgs e)
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            emitter.ParticlesPerTick = ParticlePerTrack.Value;
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Red_Click(object sender, EventArgs e)
+        {
+            emitter.FromColor = Color.Red;
         }
     }
 }
